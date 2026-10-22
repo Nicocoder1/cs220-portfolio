@@ -20,4 +20,11 @@ export const projects = [
     image: "/window.svg", // Replace with a relevant image if available
     href: "#", // Add your GitHub or demo link here
   },
+  {
+    title: "Guess Master",
+    description: "A simple game about guessing how close you are to a number from 1-100",
+    tech: ["While loop", "Scanner Object"],
+    image: "/window.svg", // Replace with a relevant image if available
+    href: "https://github.com/Nicocoder1/Guess-Master.git",
+  },
 ];
