@@ -19,11 +19,14 @@ function getOffset(idx: number, centerIdx: number, count: number) {
   return mod(idx - centerIdx + half, count) - half;
 }
 
-// Card size shrinks to fit narrow (phone) viewports so the carousel never
-// overflows the screen horizontally; spacing scales with it so neighbor
-// cards still peek in from the sides.
-function getCardMetrics(viewportWidth: number) {
-  const size = Math.max(220, Math.min(400, viewportWidth - 96));
+// Card size shrinks to fit narrow (phone) viewports AND short (low-height)
+// windows, so the carousel never overflows the screen horizontally or
+// vertically into the footer; spacing scales with it so neighbor cards
+// still peek in from the sides.
+function getCardMetrics(viewportWidth: number, viewportHeight: number) {
+  const maxByWidth = viewportWidth - 96;
+  const maxByHeight = viewportHeight * 0.4;
+  const size = Math.max(180, Math.min(400, maxByWidth, maxByHeight));
   const spacing = Math.round(size * 0.75);
   return { size, spacing };
 }
@@ -31,10 +34,10 @@ function getCardMetrics(viewportWidth: number) {
 export default function ProjectsCarousel() {
   const [centerIdx, setCenterIdx] = useState(0); // Which card is in the middle
   const touchStartX = useRef<number | null>(null); // For swipe
-  const [{ size: cardSize, spacing: cardSpacing }, setMetrics] = useState(() => getCardMetrics(400));
+  const [{ size: cardSize, spacing: cardSpacing }, setMetrics] = useState(() => getCardMetrics(400, 800));
 
   useEffect(() => {
-    const update = () => setMetrics(getCardMetrics(window.innerWidth));
+    const update = () => setMetrics(getCardMetrics(window.innerWidth, window.innerHeight));
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
