@@ -11,6 +11,6 @@ export default function PageFade({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <div className={`page-fade ${mounted ? "" : "opacity-0"}`}>{children}</div>
+    <div className={`page-fade flex-1 flex flex-col min-h-0 min-w-0 ${mounted ? "" : "opacity-0"}`}>{children}</div>
   );
 }

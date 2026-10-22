@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function AboutSection() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 items-center">
-      <div className="sm:col-span-2 prose dark:prose-invert max-w-none">
+      <div className="sm:col-span-2 prose prose-invert max-w-none">
         <p>
           Hi, I'm Nicolas Soria Gomez. I'm 22 years old and originally from Guatemala, now based in Salt Lake City, Utah. I study computer science and am working toward a software engineering degree. I love learning about AI, backend and frontend development, machine learning, and innovation.
         </p>

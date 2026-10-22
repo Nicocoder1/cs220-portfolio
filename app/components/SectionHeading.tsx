@@ -6,7 +6,7 @@ interface Props {
 
 export default function SectionHeading({ children }: Props) {
   return (
-    <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-8">
+    <h2 className="text-2xl sm:text-3xl font-semibold text-gray-100 mb-3 sm:mb-4">
       {children}
     </h2>
   );

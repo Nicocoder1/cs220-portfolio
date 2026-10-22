@@ -1,21 +1,16 @@
-/* Matrix theme colors for high contrast and readability */
-/* Matrix theme colors for high contrast and readability */
+@import "tailwindcss";
+
+/* Site is dark-mode only (Matrix theme). Theme tokens are fixed constants,
+   not a toggleable palette. */
 :root {
   --bg: #0b0b12; /* Matrix dark background */
-  --fg: #D9D9D9; /* Light silver for main text in dark mode */
-  --muted: #b6ffb6; /* Light green for muted text */
+  --fg: #e6e7ea; /* Light silver for main text */
+  --muted: #9aa0a6; /* Muted secondary text */
   --card: #10121a;
   --accent: #00FF41; /* Matrix green accent */
-  --ring: rgba(0,255,65,.3);
+  --ring: rgba(0, 255, 65, 0.3);
 }
-[data-theme="light"] {
-  --bg: #e6ffe6; /* Very light green background */
-  --fg: #003B00; /* Deep green for text */
-  --muted: #007f2f; /* Muted green for secondary text */
-  --card: #f6fff6;
-  --accent: #00FF41; /* Matrix green accent */
-  --ring: rgba(0,255,65,.2);
-}
+
 html, body {
   height: 100%;
 }
@@ -25,16 +20,23 @@ body {
   color: var(--fg);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  transition: background .3s ease, color .3s ease;
 }
+
+a { color: inherit; text-decoration: none; }
+
+::selection { background: var(--accent); color: white; }
+
 h1, h2, h3, h4, h5, h6 {
   color: var(--fg);
   transition: color .3s ease;
 }
+
 /* Card / surface utility using our variables */
 .card {
   background: var(--card);
   color: var(--fg);
-  box-shadow: 0 6px 18px rgba(2,6,23,0.45);
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.45);
 }
 
 /* Ensure all text is readable in both themes */
@@ -45,40 +47,6 @@ p, span, li, label, input, textarea, button {
 .muted, .text-muted {
   color: var(--muted) !important;
 }
-@import "tailwindcss";
-
-:root {
-  --bg: #0b0b12; /* default to elegant dark */
-  --fg: #e6e7ea;
-  --muted: #9aa0a6;
-  --card: #10121a;
-  --accent: #6aa9ff; /* electric blue accent */
-  --ring: rgba(106,169,255,.3);
-}
-
-[data-theme="light"] {
-  --bg: #fdfdfd;
-  --fg: #111318;
-  --muted: #5f646d;
-  --card: #ffffff;
-  --accent: #4f9cf9;
-  --ring: rgba(79,156,249,.25);
-}
-
-html, body {
-  height: 100%;
-}
-
-body {
-  background: var(--bg);
-  color: var(--fg);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-a { color: inherit; text-decoration: none; }
-
-::selection { background: var(--accent); color: white; }
 
 /* subtle reveal helper */
 .reveal { opacity: 0; transform: translateY(12px); transition: opacity .6s ease, transform .6s ease; }
@@ -95,13 +63,6 @@ a { color: inherit; text-decoration: none; }
   to   { background-position: 10% 3%, 90% 2%; }
 }
 
-/* Card / surface utility using our variables */
-.card {
-  background: var(--card);
-  color: var(--fg);
-  box-shadow: 0 6px 18px rgba(2,6,23,0.45);
-}
-
 /* Page fade transition utility (used for route transitions) */
 .page-fade {
   animation: pageFadeIn 260ms ease-in-out both;
@@ -109,12 +70,6 @@ a { color: inherit; text-decoration: none; }
 @keyframes pageFadeIn {
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
-}
-
-/* Headings: use the foreground variable so they adapt to theme changes. */
-h1, h2, h3 {
-  color: var(--fg);
-  transition: color .3s ease;
 }
 
 /* iOS safe-area support: ensures content doesn't get clipped by notches or home indicators */
@@ -139,4 +94,3 @@ body {
 .full-dvh {
   min-height: 100dvh;
 }
-

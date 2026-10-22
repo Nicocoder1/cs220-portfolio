@@ -7,16 +7,16 @@ export default function Footer() {
   const [showEmail, setShowEmail] = useState(false); // Show email modal?
 
   return (
-    <footer className="w-full mt-8">
+    <footer className="w-full shrink-0">
       {/* Green line above footer */}
       <div className="h-px w-full bg-[#003B00]" />
 
-      <div className="max-w-5xl mx-auto py-6 px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="max-w-5xl mx-auto py-3 sm:py-4 px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         {/* Footer text and name */}
-        <p className="text-sm text-white text-center sm:text-left">
-          <span className="font-semibold text-white">Nicolas Soria</span>
-          <span className="ml-2 text-white">— I am a computer scientist and software engineer who loves technology, AI, and innovation.</span>
-          <span className="block sm:inline sm:ml-2 text-white">© {year}</span>
+        <p className="text-sm text-[var(--fg)] text-center sm:text-left">
+          <span className="font-semibold text-[var(--fg)]">Nicolas Soria</span>
+          <span className="ml-2 text-[var(--muted)]">— I am a computer scientist and software engineer who loves technology, AI, and innovation.</span>
+          <span className="block sm:inline sm:ml-2 text-[var(--muted)]">© {year}</span>
         </p>
 
         <div className="flex items-center gap-4">
@@ -25,7 +25,7 @@ export default function Footer() {
           {/* Email popup modal */}
           {typeof window !== "undefined" && showEmail && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-              <div className="bg-white dark:bg-neutral-900 rounded-xl shadow-lg p-6 w-full max-w-xs flex flex-col gap-4">
+              <div className="bg-neutral-900 rounded-xl shadow-lg p-6 w-full max-w-xs flex flex-col gap-4">
                 <h3 className="text-lg font-semibold mb-2">Send me an email</h3>
                 <form
                   onSubmit={e => {
@@ -37,10 +37,10 @@ export default function Footer() {
                     setShowEmail(false);
                   }}
                 >
-                  <input name="subject" type="text" placeholder="Subject" className="w-full mb-2 px-3 py-2 rounded border border-gray-300 dark:border-gray-700" required />
-                  <textarea name="body" rows={3} placeholder="Message" className="w-full mb-2 px-3 py-2 rounded border border-gray-300 dark:border-gray-700" required />
+                  <input name="subject" type="text" placeholder="Subject" className="w-full mb-2 px-3 py-2 rounded border border-gray-700" required />
+                  <textarea name="body" rows={3} placeholder="Message" className="w-full mb-2 px-3 py-2 rounded border border-gray-700" required />
                   <div className="flex gap-2 justify-end">
-                <button type="button" className="px-3 py-1 rounded bg-gray-200 dark:bg-gray-700" onClick={() => setShowEmail(false)}>Cancel</button>
+                <button type="button" className="px-3 py-1 rounded bg-gray-700" onClick={() => setShowEmail(false)}>Cancel</button>
                 <button type="submit" className="px-3 py-1 rounded bg-[var(--accent)] text-white font-semibold">Send</button>
               </div>
             </form>

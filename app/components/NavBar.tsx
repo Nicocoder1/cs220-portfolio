@@ -10,7 +10,6 @@ const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/projects", label: "Projects" },
-  { href: "/uses", label: "Uses" },
 ];
     // { href: "/contact", label: "Contact" },
 
@@ -24,10 +23,6 @@ export default function NavBar() {
     if (href === "/") return activePath === "/";
     return activePath === href || activePath.startsWith(href + "/");
   };
-  const [theme, setTheme] = useState<string>(() => {
-    if (typeof document === "undefined") return "dark";
-    return document.documentElement.dataset.theme ?? "dark";
-  });
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -48,36 +43,9 @@ export default function NavBar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    // Initialize theme from localStorage if present
-    const stored = typeof window !== "undefined" ? localStorage.getItem("theme") : null;
-    if (stored) {
-      document.documentElement.dataset.theme = stored;
-      setTheme(stored);
-    } else {
-      const current = document.documentElement.dataset.theme ?? "dark";
-      document.documentElement.dataset.theme = current;
-      setTheme(current);
-    }
-  }, []);
-
-  function toggleTheme() {
-    const next = theme === "dark" ? "light" : "dark";
-    // Update <html> element's data-theme attribute for CSS variables
-    if (typeof window !== "undefined") {
-      document.documentElement.setAttribute("data-theme", next);
-    }
-    try {
-      localStorage.setItem("theme", next);
-    } catch {
-      // ignore storage errors
-    }
-    setTheme(next);
-  }
-
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 bg-[rgba(0,0,0,0.45)] backdrop-blur-md border-b border-[#78b4ff]/20 shadow-[0_0_10px_#00FF41]/20 transition-all duration-300 transition-transform ease-in-out relative`}
+      className={`sticky top-0 left-0 w-full z-50 shrink-0 bg-[var(--card)]/70 backdrop-blur-md border-b border-[#78b4ff]/20 shadow-[0_0_10px_#00FF41]/20 transition-all duration-300 transition-transform ease-in-out`}
       style={{
         WebkitBackdropFilter: 'blur(12px)',
         backdropFilter: 'blur(12px)',
@@ -136,24 +104,6 @@ export default function NavBar() {
               </li>
             ))}
           </ul>
-
-          {/* Theme toggle always visible */}
-          <button
-            aria-label="Toggle theme"
-            onClick={toggleTheme}
-            className="ml-2 p-2 rounded-full bg-white/6 dark:bg-black/30 hover:brightness-105 transition"
-            title="Toggle theme"
-          >
-            {theme === "dark" ? (
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor" aria-hidden>
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-              </svg>
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor" aria-hidden>
-                <path d="M6.76 4.84l-1.8-1.79L3.17 4.84l1.79 1.8 1.8-1.8zM1 13h3v-2H1v2zm10 9h2v-3h-2v3zm7.24-2.84l1.79 1.79 1.79-1.79-1.79-1.8-1.79 1.8zM20 11v2h3v-2h-3zM4.22 19.78l1.79-1.79-1.79-1.8-1.79 1.8 1.79 1.79zM12 5a7 7 0 0 0 0 14 7 7 0 0 0 0-14z" />
-              </svg>
-            )}
-          </button>
 
           {/* Hamburger (mobile only) */}
           <button

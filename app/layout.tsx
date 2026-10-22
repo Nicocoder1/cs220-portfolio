@@ -27,12 +27,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="dark">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}>
+    <html lang="en">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased h-dvh flex flex-col overflow-x-hidden overflow-y-auto`}>
         {/* Matrix rain background behind all content */}
         <ClientBackgroundLayer />
         <NavBar />
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col min-h-0 min-w-0">
           <PageFade>
             {children}
           </PageFade>

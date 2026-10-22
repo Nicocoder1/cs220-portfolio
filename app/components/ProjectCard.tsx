@@ -12,7 +12,7 @@ interface Props {
 // Card for each project
 export default function ProjectCard({ title, description, tech, image = "/next.svg", href }: Props) {
   return (
-    <article className="bg-[var(--card)]/80 border-2 dark:border-white border-black rounded-xl p-4 hover:scale-[1.01] transition w-full h-full flex flex-col justify-between">
+    <article className="bg-[var(--card)]/80 border-2 border-white rounded-xl p-4 hover:scale-[1.01] transition w-full h-full flex flex-col justify-between">
       {/* Project image */}
       <div className="w-full h-40 relative rounded-md overflow-hidden mb-3">
         <Image src={image} alt={title} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-contain p-4" />

@@ -9,10 +9,12 @@ const MATRIX_COLORS = {
   glow: "#00FF41",
 };
 
-const RAIN_SPEED = 0.09; // 0.3 (slow) to 1.0 (fast)
+const RAIN_SPEED = 0.1; // 0.3 (slow) to 1.0 (fast)
+const STEADY_STATE_DENSITY = 0.5; // Fraction of columns that keep re-dropping once they finish their first fall. 1 = stays as busy as the opening wave forever; lower = sparser afterward.
+const COOLDOWN_FRAMES: [number, number] = [120, 400]; // How many frames a column sits idle before it's eligible to drop again
 
 function getRandomGlyph() {
-  const glyphs = "アァカサタナハマヤャラバパイィキブプエェケセテネゴゾドボポヴ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const glyphs = "アァカサタナハマヤャラェケセテネゴゾドボポヴ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   return glyphs[Math.floor(Math.random() * glyphs.length)];
 }
 
@@ -41,6 +43,11 @@ export default function MatrixRainBackground() {
     const fontSize = 20;
     const columns = Math.floor(canvas.width / fontSize);
     const drops = Array(columns).fill(1);
+    // All columns start active so the first wave falls together; once a
+    // column reaches the bottom it either keeps going (STEADY_STATE_DENSITY
+    // chance) or goes idle for a random cooldown, thinning the rain out.
+    const active = Array(columns).fill(true);
+    const cooldown = Array(columns).fill(0);
 
     function draw() {
       if (!canvas || !ctx) return;
@@ -51,6 +58,15 @@ export default function MatrixRainBackground() {
       ctx.font = `${fontSize}px monospace`;
 
       for (let i = 0; i < columns; i++) {
+        if (!active[i]) {
+          cooldown[i] -= 1;
+          if (cooldown[i] <= 0) {
+            active[i] = true;
+            drops[i] = 0;
+          }
+          continue;
+        }
+
         // Brightest glyph
         ctx.fillStyle = MATRIX_COLORS.glow;
         ctx.shadowColor = MATRIX_COLORS.glow;
@@ -70,9 +86,16 @@ export default function MatrixRainBackground() {
 
         // Move drop
         if (canvas && drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
+          if (Math.random() < STEADY_STATE_DENSITY) {
+            drops[i] = 0;
+          } else {
+            active[i] = false;
+            cooldown[i] = Math.floor(
+              COOLDOWN_FRAMES[0] + Math.random() * (COOLDOWN_FRAMES[1] - COOLDOWN_FRAMES[0])
+            );
+          }
         }
-  drops[i] += (Math.random() * 1.5 + 0.8) * RAIN_SPEED;
+        drops[i] += (Math.random() * 1.5 + 0.8) * RAIN_SPEED;
       }
     }
 
